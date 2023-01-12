@@ -7,7 +7,7 @@ class Search extends React.Component {
     super(props);
     this.state = {
       searchText: '',
-      playerData: ''
+      playerData: {}
     };
   }
   handleChange = event => {
@@ -15,25 +15,36 @@ class Search extends React.Component {
     console.log(event.target.value)    
   }
 
+
   sendPost = event => {
     var apiCallString = 'http://localhost:8000'
-    axios.get(apiCallString, this.searchText).then((response) => {
-      console.log(response.data)
+    axios.get(apiCallString,{params: {search: this.state.searchText}}).then((response) => {
       this.setState({playerData: response.data})
+      console.log(response.data)
     })
+    console.log(this.state.playerData)
   }
 
   render() {
     return (
       <React.Fragment>
-        <h1>League of Data!</h1>
+        <h2>League of Data!</h2>
         <input 
           type="text"
           name = "searchText"
           value = {this.state.searchText}
-          onChange={this.handleChange}
-        />
+          onChange={this.handleChange}/>
         <button onClick={this.sendPost}>Search for Player</button>
+        <div>
+          {JSON.stringify(this.state.playerData) !== '{}' ? 
+          <>
+          <p>{this.state.playerData.name}</p>
+          <img width={100} height={100} src={"http://ddragon.leagueoflegends.com/cdn/13.1.1/img/profileicon/"
+           + this.state.playerData.profileIconId + ".png"} alt={"profile icon"}></img>
+          <p>Summoner Level: {this.state.playerData.summonerLevel}</p> 
+          </>
+          : <p> No Player Data</p>}
+        </div>
       </React.Fragment>
     );
   }

@@ -4,9 +4,13 @@ import Search from './components/Search.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Search />
-  </React.StrictMode>
+  <div style={{
+    position: 'absolute', left: '50%', top: '20%',
+    transform: 'translate(-50%, -50%)'}}>
+      <div>
+        <Search />
+      </div>
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

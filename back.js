@@ -7,7 +7,8 @@ require('dotenv').config()
 const app = express()
 app.use(cors())
 app.get('/', (req, res) => {
-    const userID = req.body
+    const userID = req.query.search
+    console.log(req.query.search)
     axios.get('https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/'+ userID + '?api_key=' 
     + process.env.RIOT_API_KEY_DEV).then((response) => {res.json(response.data)})
 })
